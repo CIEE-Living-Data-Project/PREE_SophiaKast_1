@@ -8,3 +8,4 @@ salmon <- readr::read_csv('https://whitlockschluter3e.zoology.ubc.ca/Data/chapte
 groundhog.library('skimr', '2022-09-01')
 
 skim(salmon)
+
