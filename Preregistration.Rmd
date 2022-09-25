@@ -23,9 +23,8 @@ Sophia Kast
 This study will borrow data from a previously conducted study on the effects of brook trout presence/absence on Chinook salmon juvenile populations. The purpose of borrowing these data is to learn and demonstrate best practices for open science workflows and creating a reproducible project. 
 
 ### Hypotheses
-The presence of brook trout in streams has no effect on juvenile Chinook salmon populations.
 
-The presence of brook trout in streams does have an effect on juvenile Chinook salmon populations. 
+The presence of brook trout in streams reduces suvivorship of juvenile Chinook salmon in the Salmon River watershed (Idaho, United States).  
 
 ## Design Plan
 The dataset borrowed by this study investigates 12 different sites in the Salmon River watershed in 1998. Each site is characterized as having either presence or absence of brook trout (2 treatments). Juvenile Chinook salmonids were released in the summer of their first year after being tagged. Their survival was measured in the spring of the following year at the Lower Granite Dam on the Snake River. Data available in the dataset includes brook trout presence/absence, # of Chinook salmon juveniles released (tagged), # of Chinook salmon juveniles that survived to the following spring, and the proportion that survived. A simple bar graph will be created showing each site and the proportion of salmon that survived, with presence or absence of brook trout denoted. 
@@ -37,7 +36,7 @@ Dataset is borrowed and sampling has already been completed. Data available in t
 Presence/absence of brook trout and survivorship of the salmon juveniles. 
 
 ## Analysis Plan
-A simple bar graph will be created showing each site and the proportion of salmon that survived, with presence or absence of brook trout denoted.
+I will visualize the data set in two ways. I will create a scatterplot of surviving salmon compared to number of released salmon. I will also create a stripchart and a violin plot of the proportion of surviving salmon by brook trout treatment type (presence vs. absence).
 
 
 
