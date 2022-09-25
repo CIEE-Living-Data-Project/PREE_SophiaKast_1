@@ -18,7 +18,7 @@ output:
 
 
 csl: 'journal-of-ecology.csl'
-bibliography: Literature.bib
+bibliography: ['Literature.bib', 'grateful-refs.bib']
 ---
 
 ```{r setup, include=FALSE}
@@ -54,6 +54,11 @@ library('groundhog')
 groundhog.library('tidyverse', '2022-09-01')
 library('grateful')
 ```
+
+```{r citepkgs, include=FALSE}
+get_pkgs_info()
+```
+
 
 I used data from the following url: <https://whitlockschluter3e.zoology.ubc.ca/Data/chapter12/chap12e4ChinookWithBrookTrout.csv>. I cleaned up the data for clarity by changing column names and adding a column to indicate site number. No calculations were conducted. The proportion of salmon surviving from each site was already calculated in the raw data table. 
 
@@ -111,9 +116,16 @@ surviving_salmon.violin.points <- surviving_salmon.violin + geom_jitter(colour =
 surviving_salmon.violin.points
 ```
 
+
+```{r echo=FALSE, results='asis'}
+cite_packages(output = 'paragraph')
+```
+
 # Discussion
 
 The results of this project show  that brook trout may be affecting the survival of juvenile Chinook salmon as they make their way from spawning grounds to the Lower Granite Dam. Results from 3 of the sites where brook trout were absent shower much higher survival rates of salmon. However, 3 other sites without brook trout showed no difference in survival rate from those with brook trout. This could indicate that there were other issues impacting brook trout survival. These factors could include increased water temperatures, pressure from sport fishing, other predation pressures, water pollution, and others. Further research is necessary to understand the exact effects that brook trout may have on Chinook salmon survival in the Salmon River watershed. 
+
+\newpage
 
 # References
 
