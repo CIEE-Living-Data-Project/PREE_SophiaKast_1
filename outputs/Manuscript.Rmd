@@ -1,0 +1,123 @@
+---
+title: "LDP Manuscript: Effect of Brook Trout on Juvenile Chinook Salmon Survival"
+author: "Sophia Kast"
+date: "`r Sys.Date()`"
+# format for Journal of Ecology
+geometry: margin=1in
+header-includes: 
+  - \usepackage{setspace}
+  - \doublespacing
+  - \usepackage{lineno}
+  - \linenumbers
+  - \usepackage{fontspec} # can only be used with xelatex output
+  - \setmainfont{Times New Roman} # can only be used with xelatex output
+  
+output: 
+  pdf_document:
+      latex_engine: xelatex
+
+
+csl: 'journal-of-ecology.csl'
+bibliography: Literature.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Title**: Effect of Brook Trout on Juvenile Chinook Salmon Survival
+
+Sophia Kast^1^\*
+
+1.  Biology Department, University of British Columbia, Okanagan Campus
+
+\*Corresponding Author
+
+\newpage
+
+# Abstract
+
+Invasive species can affect the survival of indigenous species. In this project, I use data from a 2002 study looking at the effect of brook trout on the survival of juvenile Chinook salmon in the Salmon River watershed in Idaho, in the western United States. I visualize the data to see if there is a correlation between presence of brook trout and survival of juvenile salmon. The overlying purpose of this project is to learn best practices for open science workflows and understand how to create reproducible scientific research projects from start to finish.
+
+**Key-words:** brook trout, Chinook salmonm, salmon survival
+
+# Introduction
+
+As the planet becomes increasingly spatially connected by humans, there are increasing conduits for other species to move out of their native ranges. This can have a variety of effects. Sometimes, novel species in a region can detrimentally affect the survival of established indigenous populations. Brook trout, a salmonid fish native to northeastern North America. Its range has artificially expanded and it is now one of the most populous non-native fish species in the western United States. It has been suspected that these trout may negatively affect native salmon populations in western watersheds. In this project, I borrow data from a 2002 study investigating juvenile Chinook salmon survival in the Salmon River watershed, where some streams have robust brook trout populations and others do not. At each site, researchers tagged juvenile salmon in the fall. The following spring, these tagged salmon were tracked at the Lower Granite Dam to determine the number of survivors [@levin2002].
+
+# Methods
+
+First, I loaded the necessary libraries for this project. I used the groundhog package to do this for version control, but loaded the package `grateful` without groundhog as it is stored remotely.
+
+```{r loadlib, echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+library('groundhog')
+groundhog.library('tidyverse', '2022-09-01')
+library('grateful')
+```
+
+I used data from the following url: <https://whitlockschluter3e.zoology.ubc.ca/Data/chapter12/chap12e4ChinookWithBrookTrout.csv>. I cleaned up the data for clarity by changing column names and adding a column to indicate site number. No calculations were conducted. The proportion of salmon surviving from each site was already calculated in the raw data table. 
+
+```{r loadclean, echo=FALSE, message=FALSE, warning=FALSE}
+salmon_raw <- readr::read_csv('https://whitlockschluter3e.zoology.ubc.ca/Data/chapter12/chap12e4ChinookWithBrookTrout.csv')
+salmon <- mutate(salmon_raw,
+                 troutTreatment = stringr::str_to_title(troutTreatment),
+                 site = row_number()) %>% 
+  rename(brook_trout_presence = troutTreatment, 
+       salmon_released = nReleased,
+       surviving_salmon = nSurvivors,
+       proportion_survived = proportionSurvived) %>%
+  relocate(site, .before = brook_trout_presence)
+write.csv(salmon, file = '/Users/Sophia_1/Documents/PREE_SophiaKast/data/salmon_clean.csv')
+```
+
+# Results
+
+I visualized the data in 3 separate ways. First, I created a scatterplot showing the number of surviving salmon based on the number of released salmon. 
+
+```{r scatter, echo=FALSE, warning=TRUE}
+plot(salmon$surviving_salmon~salmon$salmon_released, 
+     main = 'Salmon Survival at Lower Granite Dam', 
+     xlab = '# of Salmon Released', 
+     ylab = '# of Salmon Surviving',
+     col = "dark red")
+```
+
+\newpage
+
+Next, I created a strip chart showing the proportion of surviving salmon for each brook trout treatment (presence or absence). 
+
+```{r stripchart, echo=FALSE}
+salmon %>%
+  ggplot(aes(x = brook_trout_presence, y = proportion_survived)) +
+  geom_jitter(colour = "blue", size = 3, shape = 1, width = 0.1) +
+  xlab("Brook Trout Population") +
+  ylab("Proportion of surviving salmon") +
+  ylim(0, 0.5) +
+  theme_bw()
+```
+
+\newpage
+
+Finally, I created a violin chart to represent the same data as above, but with a different visual style. 
+
+```{r violin, echo=FALSE}
+surviving_salmon.violin <- salmon %>% 
+  ggplot(aes(x = brook_trout_presence, y = proportion_survived)) +
+  geom_violin() +
+  xlab("Brook Trout Population") +
+  ylab("Proportion of Surviving Salmon") +
+  theme_bw()
+surviving_salmon.violin.points <- surviving_salmon.violin + geom_jitter(colour = "blue", size = 3, shape = 1, width = 0.1)
+surviving_salmon.violin.points
+```
+
+# Discussion
+
+The results of this project show  that brook trout may be affecting the survival of juvenile Chinook salmon as they make their way from spawning grounds to the Lower Granite Dam. Results from 3 of the sites where brook trout were absent shower much higher survival rates of salmon. However, 3 other sites without brook trout showed no difference in survival rate from those with brook trout. This could indicate that there were other issues impacting brook trout survival. These factors could include increased water temperatures, pressure from sport fishing, other predation pressures, water pollution, and others. Further research is necessary to understand the exact effects that brook trout may have on Chinook salmon survival in the Salmon River watershed. 
+
+# References
+
+::: {#refs}
+:::
+
+

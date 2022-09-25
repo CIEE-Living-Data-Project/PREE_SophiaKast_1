@@ -4,7 +4,7 @@ library(groundhog)
 
 #' Use groundhog to load and install packages with date for version control.
 #' load tidyverse
-groundhog.library(c('tidyverse', 'skimr'), '2022-09-01')
+groundhog.library(c('tidyverse', 'tinytex', 'skimr', 'prereg'), '2022-09-01')
 
 #' `readr` is a package within `tidyverse` that allows loading of data without downloading data.
 #' load .csv data using `readr`, which pulls the data in straight from the url
@@ -24,7 +24,8 @@ head(salmon_raw)
 #' practice adding a column to denote treatment site number
 #' practice changing column names
 #' practice relocating site column to first column in data frame 
-salmon <- mutate(salmon_raw, 
+salmon <- mutate(salmon_raw,
+                 troutTreatment = stringr::str_to_title(troutTreatment),
                  site = row_number()) %>% 
   rename(brook_trout_presence = troutTreatment, 
        salmon_released = nReleased,
