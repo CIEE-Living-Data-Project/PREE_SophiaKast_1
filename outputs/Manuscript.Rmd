@@ -127,6 +127,10 @@ The results of this project show  that brook trout may be affecting the survival
 
 \newpage
 
+# Acknowledgements
+
+Thanks to the LDP course professor, instructors, and TA for guiding me through this process. 
+
 # References
 
 ::: {#refs}
