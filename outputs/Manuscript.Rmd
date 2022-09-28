@@ -49,6 +49,10 @@ As the planet becomes increasingly spatially connected by humans, there are incr
 
 First, I loaded the necessary libraries for this project. I used the groundhog package to do this for version control, but loaded the package `grateful` without groundhog as it is stored remotely.
 
+```{r create output directories if needed,}
+if( ! dir.exists("data") ){ dir.create("data") }
+```
+
 ```{r loadlib, echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 library('groundhog')
 groundhog.library('tidyverse', '2022-09-01')
@@ -72,7 +76,7 @@ salmon <- mutate(salmon_raw,
        surviving_salmon = nSurvivors,
        proportion_survived = proportionSurvived) %>%
   relocate(site, .before = brook_trout_presence)
-write.csv(salmon, file = '/Users/Sophia_1/Documents/PREE_SophiaKast/data/salmon_clean.csv')
+write.csv(salmon, file = 'data/salmon_clean.csv')
 ```
 
 # Results
@@ -84,7 +88,7 @@ plot(salmon$surviving_salmon~salmon$salmon_released,
      main = 'Salmon Survival at Lower Granite Dam', 
      xlab = '# of Salmon Released', 
      ylab = '# of Salmon Surviving',
-     col = "dark red")
+     col = "black")
 ```
 
 \newpage
@@ -94,7 +98,7 @@ Next, I created a strip chart showing the proportion of surviving salmon for eac
 ```{r stripchart, echo=FALSE}
 salmon %>%
   ggplot(aes(x = brook_trout_presence, y = proportion_survived)) +
-  geom_jitter(colour = "blue", size = 3, shape = 1, width = 0.1) +
+  geom_jitter(colour = "black", size = 3, shape = 1, width = 0.1) +
   xlab("Brook Trout Population") +
   ylab("Proportion of surviving salmon") +
   ylim(0, 0.5) +
@@ -112,7 +116,7 @@ surviving_salmon.violin <- salmon %>%
   xlab("Brook Trout Population") +
   ylab("Proportion of Surviving Salmon") +
   theme_bw()
-surviving_salmon.violin.points <- surviving_salmon.violin + geom_jitter(colour = "blue", size = 3, shape = 1, width = 0.1)
+surviving_salmon.violin.points <- surviving_salmon.violin + geom_jitter(colour = "black", size = 3, shape = 1, width = 0.1)
 surviving_salmon.violin.points
 ```
 
