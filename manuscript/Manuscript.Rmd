@@ -56,12 +56,13 @@ First, set up the project directory:
 if( ! dir.exists("data") ){ dir.create("data") }
 ```
 
-Load packages using ```groundhog```. The package ```grateful``` is used to cite packages, but cannot be loaded using ```groundhog``` due to its storage location on GitHub. 
+Load packages using ```groundhog```. The package ```grateful``` is used to cite packages, but cannot be loaded using ```groundhog``` due to its storage location on GitHub. First, it needs to be installed using the ```install_github``` function in the ```remotes``` package. 
 
 ```{r loadlib, echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
-library('grateful')
 library('groundhog')
-groundhog.library(c('tidyverse', 'tinytex'), '2022-09-01')
+groundhog.library(c('tidyverse', 'tinytex', 'remotes'), '2022-09-01')
+remotes::install_github('Pakillo/grateful')
+library('grateful')
 ```
 
 Run the function 
