@@ -48,6 +48,8 @@ The purpose of this mini-project is to demonstrate knowledge of open science pra
 
 # Methods
 
+Both code and outputs are shown for the purposes of this project to demonstrate knowledge of creating code chunks and corresponding output. 
+
 First, set up the project directory: 
 
 ```{r create output directories if needed, echo=TRUE}
@@ -107,7 +109,7 @@ Visualize the data in 3 separate plots to gain experience creating plots in RStu
 First, create a scatterplot showing the number of surviving salmon based on the number of released salmon. 
 
 
-```{r scatter, echo=FALSE, warning=TRUE, fig.cap = 'Salmon Survival at Lower Granite Dam'}
+```{r scatter, echo=TRUE, fig.cap="Salmon Survival at Lower Granite Dam", warning=TRUE}
 
 plot(salmon$surviving_salmon~salmon$salmon_released, 
      xlab = '# of Salmon Released', 
@@ -120,7 +122,7 @@ plot(salmon$surviving_salmon~salmon$salmon_released,
 Next, create a strip chart showing the proportion of surviving salmon for each brook trout treatment (presence or absence). 
 
 
-```{r stripchart, echo=FALSE, fig.cap = 'Salmon survival related to brook trout presence as a strip chart'}
+```{r stripchart, echo=TRUE, fig.cap="Salmon survival based on presence of brook trout, showed as a strip chart"}
 
 salmon %>%
   ggplot(aes(x = brook_trout_presence, y = proportion_survived)) +
@@ -136,7 +138,7 @@ salmon %>%
 Finally, create a violin chart to represent the same data as in the stripchart, but with a different visual style. 
 
 
-```{r violin, echo=FALSE, fig.cap = 'Salmon survival related to brook trout presence as a violin plot'}
+```{r violin, echo=TRUE, fig.cap="Salmon survival based on presence of brook trout, showed as a violin chart"}
 
 surviving_salmon.violin <- salmon %>% 
   ggplot(aes(x = brook_trout_presence, y = proportion_survived)) +
@@ -144,7 +146,10 @@ surviving_salmon.violin <- salmon %>%
   xlab("Brook Trout Population") +
   ylab("Proportion of Surviving Salmon") +
   theme_bw()
-surviving_salmon.violin.points <- surviving_salmon.violin + geom_jitter(colour = "black", size = 3, shape = 1, width = 0.1)
+
+surviving_salmon.violin.points <- surviving_salmon.violin + 
+  geom_jitter(colour = "black", size = 3, shape = 1, width = 0.1)
+
 surviving_salmon.violin.points
 ```
 
@@ -157,7 +162,7 @@ cite_packages(output = 'paragraph')
 
 # Discussion
 
-The results of this project show  that brook trout may be affecting the survival of juvenile Chinook salmon as they make their way from spawning grounds to the Lower Granite Dam. Results from 3 of the sites where brook trout were absent shower much higher survival rates of salmon. However, 3 other sites without brook trout showed no difference in survival rate from those with brook trout. This could indicate that there were other issues impacting brook trout survival. These factors could include increased water temperatures, pressure from sport fishing, other predation pressures, water pollution, and others. Further research is necessary to understand the exact effects that brook trout may have on Chinook salmon survival in the Salmon River watershed. 
+The plots of this data show that brook trout may be affecting the survival of juvenile Chinook salmon as they make their way from spawning grounds to the Lower Granite Dam. Results from 3 of the sites where brook trout were absent shower much higher survival rates of salmon. However, 3 other sites without brook trout showed no difference in survival rate from those with brook trout. This could indicate that there were other issues impacting brook trout survival. These factors could include increased water temperatures, pressure from sport fishing, other predation pressures, water pollution, and others. Further research is necessary to understand the exact effects that brook trout may have on Chinook salmon survival in the Salmon River watershed. 
 
 \newpage
 
