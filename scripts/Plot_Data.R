@@ -10,10 +10,12 @@ plot(salmon$surviving_salmon~salmon$salmon_released,
 
 
 #' create a simple stripchart showing the proportion of surviving salmon based on brook trout presence/absence
+
 salmon %>%
   ggplot(aes(x = brook_trout_presence, y = proportion_survived)) +
   geom_jitter(colour = "black", size = 3, shape = 1, width = 0.1) +
-  ggtitle("Salmon survival related to brook trout presence") +
+  theme(plot.caption = element_text(hjust = 0.5)) +
+  labs(caption = "Figure 2. Salmon") +
   xlab("Brook Trout Population") +
   ylab("Proportion of surviving salmon") +
   ylim(0, 0.5) +
@@ -24,7 +26,6 @@ salmon %>%
 surviving_salmon.violin <- salmon %>% 
   ggplot(aes(x = brook_trout_presence, y = proportion_survived)) +
   geom_violin() +
-  ggtitle("Salmon survival related to brook trout presence") +
   xlab("Brook Trout Population") +
   ylab("Proportion of Surviving Salmon") +
   theme_bw()

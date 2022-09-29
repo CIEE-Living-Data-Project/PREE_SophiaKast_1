@@ -1,9 +1,11 @@
 ---
-title: "LDP Manuscript: Effect of Brook Trout on Juvenile Chinook Salmon Survival"
-author: "Sophia Kast"
+title: "Living Data Project Manuscript"
+subtitle: "***Effects of Brook Trout on Juvenile Chinook Salmon Survival***"
+author: "Sophia Kast^1^*"
 date: "`r Sys.Date()`"
 # format for Journal of Ecology
 geometry: margin=1in
+fig_caption: true
 header-includes: 
   - \usepackage{setspace}
   - \doublespacing
@@ -25,9 +27,6 @@ bibliography: ['Literature.bib', 'grateful-refs.bib']
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-**Title**: Effect of Brook Trout on Juvenile Chinook Salmon Survival
-
-Sophia Kast^1^\*
 
 1.  Biology Department, University of British Columbia, Okanagan Campus
 
@@ -49,29 +48,40 @@ The purpose of this mini-project is to demonstrate knowledge of open science pra
 
 # Methods
 
-First, script to set up the project locally is provided. 
+First, set up the project directory: 
 
 ```{r create output directories if needed, echo=TRUE}
 if( ! dir.exists("data") ){ dir.create("data") }
 ```
 
-Next, I loaded the necessary libraries for this project. I used the groundhog package to do this for version control, but loaded the package `grateful` without groundhog as it is stored remotely.
+Load packages using ```groundhog```. The package ```grateful``` is used to cite packages, but cannot be loaded using ```groundhog``` due to its storage location on GitHub. 
 
 ```{r loadlib, echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
-library('groundhog')
-groundhog.library('tidyverse', '2022-09-01')
 library('grateful')
+library('groundhog')
+groundhog.library(c('tidyverse', 'tinytex'), '2022-09-01')
 ```
 
-```{r citepkgs, include=FALSE}
+Run the function 
+```
+get_pkgs_info()
+```
+This creates the package bibliography. The output is not shown here as it is not necessary for the purposes of this manuscript. 
+
+
+```{r citepkgs, message=FALSE, warning=FALSE, include=FALSE}
 get_pkgs_info()
 ```
 
+Read the data stored at the following url: <https://whitlockschluter3e.zoology.ubc.ca/Data/chapter12/chap12e4ChinookWithBrookTrout.csv>. 
 
-I used data from the following url: <https://whitlockschluter3e.zoology.ubc.ca/Data/chapter12/chap12e4ChinookWithBrookTrout.csv>. I cleaned up the data for clarity by changing column names and adding a column to indicate site number. No calculations were conducted. The proportion of salmon surviving from each site was already calculated in the raw data table. 
-
-```{r loadclean, echo=FALSE, message=FALSE, warning=FALSE}
+```{r loaddata, echo=TRUE, message=FALSE, warning=FALSE}
 salmon_raw <- readr::read_csv('https://whitlockschluter3e.zoology.ubc.ca/Data/chapter12/chap12e4ChinookWithBrookTrout.csv')
+```
+
+Tidy the data by changing the column names. Add a column to indicate site location number. Do not conduct calculations. The proportion of salmon surviving at Lower Granite Dam is already present in the raw table. 
+
+```{r tidydata, echo=TRUE, message=FALSE, warning=FALSE}
 salmon <- mutate(salmon_raw,
                  troutTreatment = stringr::str_to_title(troutTreatment),
                  site = row_number()) %>% 
@@ -80,16 +90,26 @@ salmon <- mutate(salmon_raw,
        surviving_salmon = nSurvivors,
        proportion_survived = proportionSurvived) %>%
   relocate(site, .before = brook_trout_presence)
+```
+
+Write the file to a .csv to reference when creating plots.  
+
+```{r echo=TRUE}
 write.csv(salmon, file = 'data/salmon_clean.csv')
 ```
 
+\newpage
+
 # Results
 
-I visualized the data in 3 separate ways. First, I created a scatterplot showing the number of surviving salmon based on the number of released salmon. 
+Visualize the data in 3 separate plots to gain experience creating plots in RStudio. 
 
-```{r scatter, echo=FALSE, warning=TRUE}
+First, create a scatterplot showing the number of surviving salmon based on the number of released salmon. 
+
+
+```{r scatter, echo=FALSE, warning=TRUE, fig.cap = 'Salmon Survival at Lower Granite Dam'}
+
 plot(salmon$surviving_salmon~salmon$salmon_released, 
-     main = 'Salmon Survival at Lower Granite Dam', 
      xlab = '# of Salmon Released', 
      ylab = '# of Salmon Surviving',
      col = "black")
@@ -97,14 +117,14 @@ plot(salmon$surviving_salmon~salmon$salmon_released,
 
 \newpage
 
-Next, I created a strip chart showing the proportion of surviving salmon for each brook trout treatment (presence or absence). 
+Next, create a strip chart showing the proportion of surviving salmon for each brook trout treatment (presence or absence). 
 
 
-```{r stripchart, echo=FALSE}
+```{r stripchart, echo=FALSE, fig.cap = 'Salmon survival related to brook trout presence as a strip chart'}
+
 salmon %>%
   ggplot(aes(x = brook_trout_presence, y = proportion_survived)) +
   geom_jitter(colour = "black", size = 3, shape = 1, width = 0.1) +
-  ggtitle("Salmon survival related to brook trout presence") +
   xlab("Brook Trout Population") +
   ylab("Proportion of surviving salmon") +
   ylim(0, 0.5) +
@@ -113,14 +133,14 @@ salmon %>%
 
 \newpage
 
-Finally, I created a violin chart to represent the same data as above, but with a different visual style. 
+Finally, create a violin chart to represent the same data as in the stripchart, but with a different visual style. 
 
 
-```{r violin, echo=FALSE}
+```{r violin, echo=FALSE, fig.cap = 'Salmon survival related to brook trout presence as a violin plot'}
+
 surviving_salmon.violin <- salmon %>% 
   ggplot(aes(x = brook_trout_presence, y = proportion_survived)) +
   geom_violin() +
-  ggtitle("Salmon survival related to brook trout presence") +
   xlab("Brook Trout Population") +
   ylab("Proportion of Surviving Salmon") +
   theme_bw()
@@ -129,7 +149,9 @@ surviving_salmon.violin.points
 ```
 
 
-```{r echo=FALSE, results='asis'}
+Finally, run the following function to cite the packages in the manuscript. 
+
+```{r echo=TRUE, results='asis'}
 cite_packages(output = 'paragraph')
 ```
 
