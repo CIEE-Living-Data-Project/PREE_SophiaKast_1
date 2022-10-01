@@ -37,5 +37,5 @@ salmon <- mutate(salmon_raw,
 head(salmon)
 
 #' write `salmon` to a new .csv file to store in /data
-write.csv(salmon, file = '/Users/Sophia_1/Documents/PREE_SophiaKast/data/salmon_clean.csv')
+write.csv(salmon, file = 'data/salmon_clean.csv')
 
