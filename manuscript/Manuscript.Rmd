@@ -86,19 +86,19 @@ Tidy the data by changing the column names. Add a column to indicate site locati
 
 ```{r tidydata, echo=TRUE, message=FALSE, warning=FALSE}
 salmon <- mutate(salmon_raw,
-                 troutTreatment = stringr::str_to_title(troutTreatment),
-                 site = row_number()) %>% 
-  rename(brook_trout_presence = troutTreatment, 
+                 troutTreatment = stringr::str_to_title(troutTreatment), # capitalize 
+                 site = row_number()) %>% # add column 'site' to dataframe
+  rename(brook_trout_presence = troutTreatment, # rename the columns 
        salmon_released = nReleased,
        surviving_salmon = nSurvivors,
        proportion_survived = proportionSurvived) %>%
-  relocate(site, .before = brook_trout_presence)
+  relocate(site, .before = brook_trout_presence) # move 'site' to first column 
 ```
 
 Write the file to a .csv to reference when creating plots.  
 
 ```{r echo=TRUE}
-write.csv(salmon, file = 'data/salmon_clean.csv')
+write.csv(salmon, file = 'data/salmon_clean.csv') 
 ```
 
 \newpage
@@ -113,9 +113,9 @@ First, create a scatterplot showing the number of surviving salmon based on the 
 ```{r scatter, echo=TRUE, fig.cap="Salmon Survival at Lower Granite Dam", warning=TRUE}
 
 plot(salmon$surviving_salmon~salmon$salmon_released, 
-     xlab = '# of Salmon Released', 
-     ylab = '# of Salmon Surviving',
-     col = "black")
+     xlab = '# of Salmon Released', # x axis label
+     ylab = '# of Salmon Surviving', # y axis label
+     col = "black") # point color is black
 ```
 
 \newpage
@@ -126,12 +126,12 @@ Next, create a strip chart showing the proportion of surviving salmon for each b
 ```{r stripchart, echo=TRUE, fig.cap="Salmon survival based on presence of brook trout, showed as a strip chart"}
 
 salmon %>%
-  ggplot(aes(x = brook_trout_presence, y = proportion_survived)) +
-  geom_jitter(colour = "black", size = 3, shape = 1, width = 0.1) +
-  xlab("Brook Trout Population") +
-  ylab("Proportion of surviving salmon") +
-  ylim(0, 0.5) +
-  theme_bw()
+  ggplot(aes(x = brook_trout_presence, y = proportion_survived)) + 
+  geom_jitter(colour = "black", size = 3, shape = 1, width = 0.1) + # black points
+  xlab("Brook Trout Population") + # x axis label
+  ylab("Proportion of surviving salmon") + # y axis label
+  ylim(0, 0.5) + # set scale limits
+  theme_bw() # use a black and white theme
 ```
 
 \newpage
@@ -141,17 +141,17 @@ Finally, create a violin chart to represent the same data as in the stripchart, 
 
 ```{r violin, echo=TRUE, fig.cap="Salmon survival based on presence of brook trout, showed as a violin chart"}
 
-surviving_salmon.violin <- salmon %>% 
-  ggplot(aes(x = brook_trout_presence, y = proportion_survived)) +
-  geom_violin() +
-  xlab("Brook Trout Population") +
-  ylab("Proportion of Surviving Salmon") +
-  theme_bw()
+surviving_salmon.violin <- salmon %>% # set object 
+  ggplot(aes(x = brook_trout_presence, y = proportion_survived)) + # select data
+  geom_violin() + # plot type is violin
+  xlab("Brook Trout Population") + # x axis label
+  ylab("Proportion of Surviving Salmon") + # y axis label
+  theme_bw() # use a black and white theme
 
-surviving_salmon.violin.points <- surviving_salmon.violin + 
-  geom_jitter(colour = "black", size = 3, shape = 1, width = 0.1)
+surviving_salmon.violin.points <- surviving_salmon.violin + # set object
+  geom_jitter(colour = "black", size = 3, shape = 1, width = 0.1) # black points
 
-surviving_salmon.violin.points
+surviving_salmon.violin.points # view violin plot
 ```
 
 

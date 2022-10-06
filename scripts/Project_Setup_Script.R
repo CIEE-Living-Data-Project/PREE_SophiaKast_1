@@ -1,7 +1,9 @@
-dir.create("data")
-dir.create("scripts")
-dir.create("outputs")
-dir.create("manuscript")
+#' this script should only be run once. Remove `#` to run. 
 
-dir.create("data/url")
+# dir.create("data")
+# dir.create("scripts")
+# dir.create("outputs")
+# dir.create("manuscript")
+
+# dir.create("data/url")
 
